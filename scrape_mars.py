@@ -102,17 +102,17 @@ def find_feature_image():
 
 def find_most_recent_weather_tweet():
     """Returns most recent tweet about weather on Mars"""
-
+    
     twitter_url = "https://twitter.com/marswxreport?lang=en"
     
     response = requests.get(twitter_url)
     soup = BeautifulSoup(response.text, 'html.parser')
-    twitter_results = soup.body.find_all('div', class_="timeline")
+    twitter_results = soup.body.find_all('div', class_="js-tweet-text-container")
     
     recent_tweets = []
 
     for tweet in twitter_results:
-        recent = tweet.find_all('div', class_="dir-ltr")
+        recent = tweet.find_all('p', class_="TweetTextSize TweetTextSize--normal js-tweet-text tweet-text")
         for tweet_text in recent:
             recent_tweets.append(tweet_text.text.strip())
             
